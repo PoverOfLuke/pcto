@@ -668,6 +668,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 
 // ==================== AGENDA 2030 GOALS ====================
@@ -741,7 +742,11 @@ if (container) {
     ground.receiveShadow = true;
     scene.add(ground);
 
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
+
     const gltfLoader = new GLTFLoader();
+    gltfLoader.setDRACOLoader(dracoLoader);
     gltfLoader.load('/Primo%20anno/3dPianta-compressed.glb',
         (gltf) => {
             const model = gltf.scene;
@@ -933,7 +938,11 @@ function loadGoal(index) {
     }
 
     const gltfPath = `/SecondoAnno/Oggetti3d/${id}/${id}.gltf`;
-    new GLTFLoader().load(gltfPath,
+    const agendaDraco = new DRACOLoader();
+    agendaDraco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
+    const agendaLoader = new GLTFLoader();
+    agendaLoader.setDRACOLoader(agendaDraco);
+    agendaLoader.load(gltfPath,
         (gltf) => {
             const model = gltf.scene;
             model.traverse(node => {

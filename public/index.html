@@ -370,20 +370,42 @@
         }
 
         /* ========== RESPONSIVE ========== */
-        @media (max-width: 900px) {
-            .split { grid-template-columns: 1fr; gap: 2rem; }
-            .split .media { aspect-ratio: 16/9; }
-            .slide { padding: 2rem 1.5rem; }
-            .slide-grid { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 1200px) {
+            .slide { padding: 2rem 2.5rem; }
+            .split { gap: 2rem; }
+            .slide h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
+            .slide-1-title { font-size: clamp(1.8rem, 5vw, 3.6rem); }
+            .slide .desc { font-size: clamp(0.85rem, 1.1vw, 1rem); }
+            .info-row { flex-wrap: wrap; }
+        }
+        @media (max-width: 1000px) {
+            .slide { padding: 1.5rem 1.8rem; }
+            .split .text .info-row { flex-direction: column; align-items: stretch; gap: 1rem; }
+            .split .text .info-row .info-card { width: 100%; min-width: 0; }
+            .slide-1-title { font-size: clamp(1.5rem, 4.5vw, 2.8rem); }
+            .slide-1-sub { font-size: clamp(0.6rem, 1vw, 0.9rem); }
             .s7-layout { grid-template-columns: 1fr; }
+            .slide-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 900px) {
+            .slide { padding: 1.5rem 1.5rem; }
+            .split { grid-template-columns: 1fr; gap: 1.5rem; }
+            .split .media { aspect-ratio: 16/9; }
+            .slide h2 { font-size: clamp(1.5rem, 3.2vw, 2.2rem); }
+            .slide .desc { font-size: clamp(0.8rem, 1vw, 0.92rem); }
+            .slide-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 600px) {
-            .slide { padding: 1.5rem 1.2rem; }
+            .slide { padding: 1rem 1rem; }
+            .slide h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
+            .slide-1-title { font-size: clamp(1.3rem, 4vw, 2rem); }
+            .slide-1-sub { font-size: 0.65rem; }
             .slide-grid { grid-template-columns: 1fr; }
-            .nav-dots { right: 0.8rem; }
-            .nav-dots a { width: 7px; height: 7px; }
+            .nav-dots { right: 0.5rem; gap: 0.4rem; }
+            .nav-dots a { width: 6px; height: 6px; }
             .slide-num { display: none; }
             .agenda-viewer { flex-direction: column; }
+            .agenda-canvas-wrap { max-width: 100% !important; }
         }
     </style>
 </head>
@@ -430,8 +452,6 @@
                         <div class="value">ITS INCOM</div>
                         <div class="label">Anno</div>
                         <div class="value">2023/24</div>
-                        <div class="label">Periodo</div>
-                        <div class="value">I Semestre</div>
                         <div class="label">Orari</div>
                         <div class="value">9:00–13:00<br>14:00–18:00</div>
                         <div class="label">Progetto</div>
@@ -489,8 +509,6 @@
                     <div class="value">ITS INCOM</div>
                     <div class="label">Anno</div>
                     <div class="value">2024/25</div>
-                    <div class="label">Periodo</div>
-                    <div class="value">I + II Semestre</div>
                     <div class="label">Orari</div>
                     <div class="value">9:00–13:00<br>14:00–18:00</div>
                     <div class="label">Progetto</div>
@@ -498,7 +516,7 @@
                 </div>
                 <div class="desc" style="text-align:left; margin-bottom:0;">
                     Secondo anno presso ITS INCOM Academy. Il progetto assegnato
-                    riguardava la modellazione e il rigging di oggetti 3D rappresentativi
+                    riguardava la modellazione di oggetti 3D rappresentativi
                     dei <strong>17 Obiettivi dell'Agenda 2030</strong> per lo Sviluppo Sostenibile delle Nazioni Unite.
                     Nonostante l'argomento fosse lontano dagli interessi personali,
                     il gruppo è riuscito a reinterpretare le consegne con creatività,
@@ -547,8 +565,6 @@
                     <div class="value">Weblink Srl</div>
                     <div class="label">Anno</div>
                     <div class="value">2025/26</div>
-                    <div class="label">Periodo</div>
-                    <div class="value">I + II Semestre</div>
                     <div class="label">Orari</div>
                     <div class="value">8:30–13:00<br>14:00–18:00</div>
                     <div class="label">Progetto</div>
@@ -557,7 +573,7 @@
                 <div class="desc" style="text-align:left; margin-bottom:0;">
                     Terzo anno presso <strong>Weblink Srl</strong> a Varese, agenzia specializzata
                     nella creazione di siti web, e-commerce e applicazioni software.
-                    L'ufficio è suddiviso in tre sezioni che distinguono i ruoli
+                    L'ufficio è suddiviso in due sezioni che distinguono i ruoli
                     dei dipendenti: figure <em>front-end</em> principalmente su WordPress
                     e figure <em>back-end</em> su applicazioni C#.
                     Il lavoro è stato prevalentemente autonomo, con la possibilità
@@ -897,7 +913,7 @@ function startAutoCycle() {
     autoCycleInterval = setInterval(() => {
         const next = (currentGoalIndex + 1) % GOALS.length;
         loadGoal(next);
-    }, 3000);
+    }, 4000);
 }
 
 function pauseAutoCycle() {
@@ -922,7 +938,6 @@ function loadGoal(index) {
         if (i === index) btn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     });
 
-    agendaOverlay.textContent = 'CARICAMENTO…';
     agendaOverlay.classList.remove('hidden');
 
     if (currentModel) {
@@ -978,7 +993,7 @@ function loadGoal(index) {
         null,
         (err) => {
             console.warn('Could not load', gltfPath, err);
-            document.getElementById('agenda-overlay').textContent = 'Errore ' + id + ': ' + (err.status || err.message || 'caricamento fallito');
+            agendaOverlay.textContent = 'Errore ' + id + ': ' + (err.status || err.message || 'caricamento fallito');
         }
     );
 }
@@ -1011,18 +1026,23 @@ agendaObserver.observe(slide5);
 const dots = document.querySelectorAll('.nav-dots a');
 const slides = document.querySelectorAll('.slide');
 
-const slideObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const id = entry.target.id;
-            dots.forEach(d => {
-                d.classList.toggle('active', d.getAttribute('href') === '#' + id);
-            });
-        }
+function updateActiveDot() {
+    let best = null, bestRatio = 0;
+    slides.forEach(s => {
+        const r = s.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const visible = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+        const ratio = visible / r.height;
+        if (ratio > bestRatio) { bestRatio = ratio; best = s.id; }
     });
-}, { threshold: 0.3 });
-
-slides.forEach(s => slideObserver.observe(s));
+    dots.forEach(d => d.classList.toggle('active', d.getAttribute('href') === '#' + best));
+}
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(() => { updateActiveDot(); ticking = false; }); ticking = true; }
+});
+window.addEventListener('resize', updateActiveDot);
+updateActiveDot();
 </script>
 </body>
 </html>
